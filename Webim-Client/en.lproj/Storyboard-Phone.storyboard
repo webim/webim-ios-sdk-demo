@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uu1-DI-Ur3">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="UIx-2F-FXO">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="uu1-DI-Ur3" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TjE-MG-Oz8">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2gK-6y-sdI" kind="relationship" relationship="rootViewController" id="doL-aw-lVU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gyd-7q-AwI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="34" y="19"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="8Lc-BB-eCv">
+            <objects>
+                <viewController storyboardIdentifier="WMRootViewController" id="2gK-6y-sdI" customClass="WMRootViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c48-Pu-TWt">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="glV-7S-PHc" userLabel="Account Blocked View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Учетная запись заблокирована, попробуйте обратиться позже." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V47-gw-48i">
+                                        <rect key="frame" x="10" y="200" width="300" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" id="B8N-bd-Ukb" userLabel="Blocking View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="whiteLarge" id="HsZ-cm-ha8" userLabel="Activity Indicator">
+                                        <rect key="frame" x="142" y="201" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Обновление..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TSa-Aa-h7Y" userLabel="Connecting Message Label">
+                                        <rect key="frame" x="0.0" y="246" width="320" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="nRe-KU-6Zm" userLabel="Call Operator View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mhM-CY-Vw4">
+                                        <rect key="frame" x="40" y="214" width="240" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <size key="titleShadowOffset" width="0.0" height="1"/>
+                                        <state key="normal" title="Обратиться к оператору" backgroundImage="Button.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.20564350328947367" green="0.20564350328947367" blue="0.20564350328947367" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startChatButtonAction:" destination="2gK-6y-sdI" eventType="touchUpInside" id="P10-9J-bV5"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WebimLogo.png" id="Wq4-WA-NIV">
+                                        <rect key="frame" x="50" y="20" width="224" height="175"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Vlb-Gb-UJs" userLabel="No Operators Online">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Сейчас нет операторов в онлайне, попробуйте обратиться позже." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g73-kQ-4XD">
+                                        <rect key="frame" x="10" y="297" width="300" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="0lE-8e-458"/>
+                    <connections>
+                        <outlet property="accountBlockedView" destination="glV-7S-PHc" id="lJ1-gM-e0u"/>
+                        <outlet property="blockingViewActivityIndicatorView" destination="HsZ-cm-ha8" id="gzf-MK-M6m"/>
+                        <outlet property="callOperatorView" destination="nRe-KU-6Zm" id="x92-zN-JcX"/>
+                        <outlet property="noOnlineOperatorsLabel" destination="g73-kQ-4XD" id="0jM-9t-zLm"/>
+                        <outlet property="noOperatorsOnlineView" destination="Vlb-Gb-UJs" id="vds-sd-5gv"/>
+                        <outlet property="startChatButton" destination="mhM-CY-Vw4" id="m3f-IN-yW9"/>
+                        <outlet property="webimLogoImageView" destination="Wq4-WA-NIV" id="O8s-hB-KT2"/>
+                        <segue destination="sRX-BY-UqO" kind="push" identifier="ShowChatViewController" id="71b-ug-SrC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YTW-zE-whk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="453" y="19"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="qfB-ZR-ad0">
+            <objects>
+                <viewController id="sRX-BY-UqO" customClass="WMChatViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aob-ui-39a">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="7ZO-qf-Tou" userLabel="Text Input Placeholder">
+                                <rect key="frame" x="0.0" y="497" width="320" height="41"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Сообщение..." minimumFontSize="17" id="eJd-uE-0af" userLabel="Text Input">
+                                        <rect key="frame" x="7" y="7" width="235" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="sRX-BY-UqO" id="Pc2-kI-GMf"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b2g-tq-bhf" userLabel="Send Button">
+                                        <rect key="frame" x="245" y="7" width="70" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <state key="normal" title="Отправить">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendMessageButtonAction:" destination="sRX-BY-UqO" eventType="touchUpInside" id="CeB-8H-COi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3gm-7b-Jbd" customClass="UIBubbleTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="497"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="kUK-np-Xan" appends="YES" id="NTh-fS-twR"/>
+                                </connections>
+                            </tableView>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6vT-hG-gFU" userLabel="Waiting Operator Label">
+                                <rect key="frame" x="6" y="10" width="305" height="81"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" text="Предоставлено: webim.ru" textAlignment="center" id="SGU-up-TP6">
+                                <rect key="frame" x="0.0" y="538" width="320" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="PDv-py-wDe">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" id="I0z-Kh-KZw">
+                            <view key="customView" contentMode="scaleToFill" id="dOM-E3-QK5" userLabel="Bar Button Placeholder">
+                                <rect key="frame" x="16" y="2" width="221" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="pH9-52-RZM" userLabel="Operator Image View">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="axZ-Kw-J5f" userLabel="Operator Name Label">
+                                        <rect key="frame" x="45" y="10" width="192" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Закрыть" id="MuF-RY-Oaa">
+                            <connections>
+                                <action selector="closeChatBarButtonAction:" destination="sRX-BY-UqO" id="sWj-M7-zuZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bubbleTable" destination="3gm-7b-Jbd" id="uqr-RU-yQo"/>
+                        <outlet property="clientMessageTextField" destination="eJd-uE-0af" id="GSa-cr-tGO"/>
+                        <outlet property="operatorBarButtonItem" destination="I0z-Kh-KZw" id="161-O7-24J"/>
+                        <outlet property="operatorImageView" destination="pH9-52-RZM" id="R63-6z-uwm"/>
+                        <outlet property="operatorNameLabel" destination="axZ-Kw-J5f" id="UVW-av-9hQ"/>
+                        <outlet property="sendMessageButton" destination="b2g-tq-bhf" id="Nie-rc-njU"/>
+                        <outlet property="supportedByTextView" destination="SGU-up-TP6" id="oJo-VZ-qgM"/>
+                        <outlet property="textInputPlaceholder" destination="7ZO-qf-Tou" id="YNs-nZ-WRa"/>
+                        <outlet property="waitForOperatorLabel" destination="6vT-hG-gFU" id="lJI-Uz-jMR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qpH-1o-Zz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="kUK-np-Xan">
+                    <connections>
+                        <action selector="tapInTableViewGestureAction:" destination="sRX-BY-UqO" id="TEH-Q7-9Yc"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="950" y="19"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Button.png" width="481" height="101"/>
+        <image name="WebimLogo.png" width="296" height="216"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
