@@ -1,0 +1,25 @@
+PODS:
+  - HCSStarRatingView (1.0)
+  - JSQMessagesViewController (7.1.0):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
+
+DEPENDENCIES:
+  - HCSStarRatingView (from `https://github.com/hugocampossousa/HCSStarRatingView.git`)
+  - JSQMessagesViewController
+
+EXTERNAL SOURCES:
+  HCSStarRatingView:
+    :git: https://github.com/hugocampossousa/HCSStarRatingView.git
+
+CHECKOUT OPTIONS:
+  HCSStarRatingView:
+    :commit: 52fcff0ec04ba7d1f8c8219c2f24c8ec71258b93
+    :git: https://github.com/hugocampossousa/HCSStarRatingView.git
+
+SPEC CHECKSUMS:
+  HCSStarRatingView: 6fb5c03b4ae2b8a1cca712da20fca99898c69af1
+  JSQMessagesViewController: ca11f86fa68ca70835f05e169df9244147c1dc40
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+
+COCOAPODS: 0.37.2

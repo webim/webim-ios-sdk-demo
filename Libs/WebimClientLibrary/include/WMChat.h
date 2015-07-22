@@ -29,5 +29,6 @@ typedef enum {
 @property (nonatomic, strong) WMOperator *chatOperator;
 @property (nonatomic, strong) NSNumber *uid;
 @property (nonatomic, assign) BOOL hasUnreadMessages;
+@property (nonatomic, assign) BOOL proposeToRateBeforeClose;
 
 @end

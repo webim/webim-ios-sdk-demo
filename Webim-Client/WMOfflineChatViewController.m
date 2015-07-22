@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.textInputPlaceholder.hidden = self.chat != nil && !self.chat.isOffline;
+    self.inputToolbar.hidden = self.chat != nil && !self.chat.isOffline;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -29,7 +29,7 @@
              object:nil];
 
     [self reloadBubbleTableView];
-    [self bubbleTableScrollToBottom];
+    [self finishReceivingMessageAnimated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -56,46 +56,39 @@
     [[WebimController shared].offlineSession downloadImageForMessage:message completion:block];
 }
 
-#pragma mark - User Actions
+- (WMBaseSession *)session {
+    return [WebimController shared].offlineSession;
+}
 
-- (IBAction)sendMessageButtonAction:(id)sender {
-    NSString *message = self.clientMessageTextField.text;
-    if (message.length == 0) {
-        return;
-    }
-    CGFloat bubbleMaxWidth = CGRectGetWidth(self.bubbleTableView.frame) - 20.f;
+#pragma mark - JSQMessagesViewController
+
+- (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date {
+    [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
-    NSBubbleData *bubbleDataItem = nil;
-    bubbleDataItem = [NSBubbleData dataWithText:message
-                                           date:[NSDate date]
-                                           type:BubbleTypeMine
-                                          width:bubbleMaxWidth];
-    [self.messagesDataSource addObject:bubbleDataItem];
-    [self.bubbleTableView reloadData];
-    
-    self.clientMessageTextField.text = nil;
-    
+    self.inputToolbar.contentView.rightBarButtonItem.enabled = NO;
     WMOfflineSession *session = [WebimController shared].offlineSession;
-    [session sendMessage:message inChat:self.chat onDataBlock:^(BOOL successful, WMChat *chat, WMMessage *chatMessage, NSError *error) {
+    [session sendMessage:text inChat:self.chat onDataBlock:^(BOOL successful, WMChat *chat, WMMessage *chatMessage, NSError *error) {
         if (successful) {
             self.chat = chat;
         } else {
-            self.clientMessageTextField.text = message;
+            self.inputToolbar.contentView.textView.text = text;
             [self tryToProcessSendMessageError:error];
         }
     } completion:^(BOOL successful) {
+        [self finishSendingMessageAnimated:YES];
         [self reloadBubbleTableView];
-        [self bubbleTableScrollToBottom];
+        [self finishReceivingMessageAnimated:YES];
     }];
 }
 
-- (IBAction)tapInTableViewGestureAction:(id)sender {
-    [self.view endEditing:YES];
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
+    // Empty to avoid raiting offline chat
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self sendMessageButtonAction:textField];
-    return YES;
+#pragma mark - User Actions
+
+- (IBAction)tapInTableViewGestureAction:(id)sender {
+    [self.view endEditing:YES];
 }
 
 - (void)sendImage:(UIImage *)image {
@@ -111,7 +104,7 @@
         }
     } completion:^(BOOL successful) {
         [self reloadBubbleTableView];
-        [self bubbleTableScrollToBottom];
+        [self finishReceivingMessageAnimated:YES];
     }];
 }
 
@@ -147,7 +140,7 @@
             [notification.userInfo[WMOfflineChatChangesNewChatsKey] containsObject:self.chat] ||
             [notification.userInfo[WMOfflineChatChangesModifiedChatsKey] containsObject:self.chat]) {
         [self reloadBubbleTableView];
-        [self bubbleTableScrollToBottom];
+        [self finishReceivingMessageAnimated:YES];
     }
 }
 

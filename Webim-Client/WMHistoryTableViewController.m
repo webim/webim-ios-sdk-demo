@@ -54,6 +54,7 @@ static WMHistoryTableViewController *sharedInastance = nil;
     [nc addObserver:self selector:@selector(onlineSessionStartChatNotification:) name:WebimNotifications.onlineChatStart object:nil];
     [nc addObserver:self selector:@selector(onlineSessionChatStatusChangeNotification:) name:WebimNotifications.onlineChatStatusChange object:nil];
     [nc addObserver:self selector:@selector(webimNotificationsDidReceiveUpdateNotification:) name:WebimNotifications.didReceiveUpdate object:nil];
+    [nc addObserver:self selector:@selector(onlineHasOnlineOperatorChangeNotification:) name:WebimNotifications.onlineSessionHasOnlineOperatorChange object:nil];
     
     [self updateViewsOnRealtimeSessionChanges];
     [self reloadDataSourceAnimated:NO];
@@ -87,14 +88,15 @@ static WMHistoryTableViewController *sharedInastance = nil;
     }
 }
 
-- (void)updateViewsOnRealtimeSessionChanges {
+- (void)updateStartChatButtonTitles {
     WMSession *session = [WebimController shared].realtimeSession;
+    NSString *startChatTitle = session.hasOnlineOperator ?
+        WMLocString(@"HistoryStartOnlineChatButtonTitle") : WMLocString(@"HistoryStartOfflineChatButtonTitle");
+    [self.startChatButton setTitle:startChatTitle forState:UIControlStateNormal];
+}
 
-    BOOL canContinueChat = [self canContinueChatInRealtimeSession:session];
-    NSString *title = canContinueChat ?
-        WMLocString(@"HistoryContinueChatButtonTitle") : WMLocString(@"HistoryStartChatButtonTitle");
-    [self.startChatButton setTitle:title
-                          forState:UIControlStateNormal];
+- (void)updateViewsOnRealtimeSessionChanges {
+    [self updateStartChatButtonTitles];
 }
 
 - (BOOL)canContinueChatInRealtimeSession:(WMSession *)session {
@@ -125,6 +127,14 @@ static WMHistoryTableViewController *sharedInastance = nil;
         return [self canContinueChatInRealtimeSession:[WebimController shared].realtimeSession];
     }
     return self.dataSource.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSString *title = section == 0 ? WMLocString(@"HistoryCurrentChatSectionTitle") : WMLocString(@"HistoryHistoryChatSectionTitle");
+    if (section == 0 && ![self canContinueChatInRealtimeSession:[WebimController shared].realtimeSession]) {
+        title = nil;
+    }
+    return title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -219,6 +229,10 @@ static WMHistoryTableViewController *sharedInastance = nil;
 
 - (void)onlineSessionChatStatusChangeNotification:(NSNotification *)notification {
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:ChatSectionRealtime] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)onlineHasOnlineOperatorChangeNotification:(NSNotification *)notification {
+    [self updateStartChatButtonTitles];
 }
 
 #pragma mark - Offline Session Notification Handerls

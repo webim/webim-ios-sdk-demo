@@ -7,23 +7,24 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UIBubbleTableView.h"
+#import <JSQMessages.h>
 
-@interface WMChatBaseViewController : UIViewController
+#import "WMRateOperatorTableViewController.h"
 
-@property (strong, nonatomic) IBOutlet UIBubbleTableView *bubbleTableView;
-@property (strong, nonatomic) IBOutlet UITextField *clientMessageTextField;
-@property (strong, nonatomic) IBOutlet UIButton *sendMessageButton;
-@property (strong, nonatomic) IBOutlet UIView *textInputPlaceholder;
-@property (strong, nonatomic) IBOutlet UITextView *supportedByTextView;
+@class WMBaseSession;
+
+@interface WMChatBaseViewController : JSQMessagesViewController <WMRateOperatorTVCProtocol>
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *operatorBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIImageView *operatorImageView;
-@property (strong, nonatomic) IBOutlet UILabel *operatorNameLabel;
 
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 
 - (IBAction)cameraButtonAction:(id)sender;
 
 - (void)sendImage:(UIImage *)image;
+
+- (WMBaseSession *)session;
+
+- (void)openOperatorRatingView:(NSString *)authorID;
 
 @end

@@ -10,10 +10,14 @@
 "ToastNewImageMessageTitle"="Новое изображение в чате";
 
 /* HistoryTableViewController */
-"HistoryStartChatButtonTitle"="Начать чат";
+"HistoryStartOnlineChatButtonTitle"="Задайте вопрос ONLINE";
+"HistoryStartOfflineChatButtonTitle"="Задайте вопрос OFFLINE";
+"HistoryStartForceOfflineChatButtonTitle"="Принудительно задать вопрос OFFLINE";
 "HistoryContinueChatButtonTitle"="Продолжить чат";
 "HistoryOpratorFileMessageCellTitle"="Получен файл";
 "HistoryVistiorFileMessageCellTitle"="Отправлено изображение";
+"HistoryCurrentChatSectionTitle"="Текущий чат";
+"HistoryHistoryChatSectionTitle"="История";
 
 /* Image Picker */
 "ImagePickerUseCamera"="Снять фото";
@@ -27,6 +31,12 @@
 "NoOnlineOperatorsAlertMessage"="Сейчас нет доступных онлайн операторов. Вы можете попробовать обратиться чуть позже или оставить свое обращение оффлайн. Оператор ответит, как только будет возможно.";
 "NoOnlineOperatorsAlertCloseButtonTitle"="Закрыть чат";
 "NoOnlineOperatorsAlertStartOfflineChatButtonTitle"="Написать оффлайн";
+
+/* Rate */
+"RatingTitle"="Оценить";
+"RatingSendButtonTitle"="Послать";
+"RatingCancelButtonTitle"="Не сейчас";
+"RatingClarifyingText"="Пожалуйста, оцените работу оператора";
 
 /* Session Errors */
 "WMSessionErrorUnknown"="Произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки";

@@ -20,8 +20,21 @@
 
 @property (strong, nonatomic) NSMutableArray *messagesDataSource;
 
-- (NSBubbleType)bubbleTypeFromMessageKind:(WMMessageKind)kind;
-- (void)bubbleTableScrollToBottom;
+@property (nonatomic, strong) NSDictionary *timestampMessageDictionary;
+
+@property (nonatomic, strong) NSString *operatorID;
+@property (nonatomic, strong) NSString *operatorName;
+@property (nonatomic, strong) JSQMessagesBubbleImage *operatorBubbleImage;
+@property (nonatomic, strong) JSQMessagesAvatarImage *operatorAvatarImage;
+
+@property (nonatomic, strong) NSString *systemID;
+@property (nonatomic, strong) NSString *systemName;
+@property (nonatomic, strong) JSQMessagesBubbleImage *systemBubbleImage;
+@property (nonatomic, strong) JSQMessagesAvatarImage *systemAvararImage;
+
+@property (nonatomic, strong) JSQMessagesBubbleImage *senderBubbleImage;
+@property (nonatomic, strong) JSQMessagesAvatarImage *senderAvatarImage;
+
 - (void)reloadBubbleTableView;
 
 @end

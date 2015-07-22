@@ -52,6 +52,9 @@
 #ifdef DEBUG
     NSLog(@"Warning: failed to register for remote notifications with error:\n%@", error);
 #endif
+    if ([WebimController shared].deviceToken.length > 0) {
+        [WMSession setDeviceTokenString:[WebimController shared].deviceToken];
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

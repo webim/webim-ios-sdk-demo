@@ -9,6 +9,8 @@
 
 #import "UIImage+OrientationFix.h"
 
+static NSString *ChatToRatingSegue = @"ModalSegueToRateNavigationViewController";
+
 @interface WMChatBaseViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
@@ -18,24 +20,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-#ifdef NSFoundationVersionNumber_iOS_6_1
-    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:ChatToRatingSegue]) {
+        UINavigationController *nvc = segue.destinationViewController;
+        WMRateOperatorTableViewController *rateTVC = nvc.viewControllers.firstObject;
+        rateTVC.ratingDeletage = self;
+        rateTVC.operatorID = sender;
     }
-#endif
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(keyboardWillShowNotification:) name:UIKeyboardWillShowNotification object:nil];
-    [nc addObserver:self selector:@selector(keyboardWillHideNotification:) name:UIKeyboardWillHideNotification object:nil];
+- (void)openOperatorRatingView:(NSString *)authorID {
+    [self performSegueWithIdentifier:ChatToRatingSegue sender:authorID];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+- (IBAction)openWebimLink:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://webim.ru"]];
 }
 
 - (IBAction)cameraButtonAction:(id)sender {
@@ -97,53 +99,14 @@
 - (void)sendImage:(UIImage *)image {
 }
 
-#pragma mark - Keyboard Notifications
-
-- (void)keyboardWillShowNotification:(NSNotification *)notification {
-    NSDictionary *info = [notification userInfo];
-    NSTimeInterval duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        kbSize = CGSizeMake(kbSize.height, kbSize.width);
-    }
-    __block CGRect frame = _textInputPlaceholder.frame;
-    frame.origin.y -= kbSize.height - CGRectGetHeight(_supportedByTextView.frame);
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _textInputPlaceholder.frame = frame;
-        frame = self.bubbleTableView.frame;
-        frame.size.height -= kbSize.height - CGRectGetHeight(_supportedByTextView.frame);;
-        
-        if (self.bubbleTableView.contentSize.height - self.bubbleTableView.contentOffset.y == self.bubbleTableView.frame.size.height ||
-            (self.bubbleTableView.contentSize.height < self.bubbleTableView.frame.size.height &&
-             self.bubbleTableView.contentSize.height > frame.size.height)) {
-                self.bubbleTableView.contentOffset = CGPointMake(0, self.bubbleTableView.contentSize.height - frame.size.height);
-            }
-    } completion:^(BOOL finished) {
-        self.bubbleTableView.frame = frame;
-    }];
+- (WMBaseSession *)session {
+    return nil;
 }
 
-- (void)keyboardWillHideNotification:(NSNotification *)notification {
-    NSDictionary *info = [notification userInfo];
-    NSTimeInterval duration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    __block CGRect frame = self.bubbleTableView.frame;
-    CGFloat delimiterPosition = CGRectGetHeight(self.view.frame) -
-    CGRectGetHeight(_textInputPlaceholder.frame) -
-    CGRectGetHeight(_supportedByTextView.frame);
-    frame.size.height = delimiterPosition;
-    CGPoint offset = self.bubbleTableView.contentOffset;
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.bubbleTableView.frame = frame;
-        self.bubbleTableView.contentOffset = offset;
-        if (self.bubbleTableView.contentSize.height - self.bubbleTableView.contentOffset.y < self.bubbleTableView.frame.size.height) {
-            NSInteger hiddenContentHeight = self.bubbleTableView.contentSize.height - frame.size.height;
-            self.bubbleTableView.contentOffset = CGPointMake(0, hiddenContentHeight > 0 ? hiddenContentHeight : 0);
-        }
-        frame = _textInputPlaceholder.frame;
-        frame.origin.y = delimiterPosition;
-        _textInputPlaceholder.frame = frame;
-    } completion:nil];
+- (void)rateOperatorTableViewControllerDidDismissRating:(WMRateOperatorTableViewController *)tvc {
+}
+
+- (void)rateOperatorTableViewController:(WMRateOperatorTableViewController *)tvc didRate:(NSInteger)rate authorID:(NSString *)authorID rateCompletion:(void (^)(BOOL))block {
 }
 
 @end

@@ -30,6 +30,14 @@ typedef enum {
     WMChatAttachmentImagePNG,
 } WMChatAttachmentImageType;
 
+typedef NS_ENUM(NSUInteger, WMOperatorRate) {
+    WMOperatorRateOneStar       = -2,
+    WMOperatorRateTwoStars      = -1,
+    WMOperatorRateThreeStars    =  0,
+    WMOperatorRateFourStars     =  1,
+    WMOperatorRateFiveStars     =  2,
+};
+
 @class WMMessage;
 
 extern NSString *const WMWebimErrorDomain;

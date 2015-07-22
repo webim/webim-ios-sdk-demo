@@ -28,6 +28,7 @@ typedef enum {
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) id messageData;
 @property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSString *authorID;
 
 - (NSString *)filePath;
 

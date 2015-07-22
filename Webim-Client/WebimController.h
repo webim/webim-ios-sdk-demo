@@ -20,6 +20,7 @@ extern const struct WebimNotifications {
     __unsafe_unretained NSString *onlineChatStart;
     __unsafe_unretained NSString *onlineChatStatusChange;
     __unsafe_unretained NSString *onlineSessionStatusChange;
+    __unsafe_unretained NSString *onlineSessionHasOnlineOperatorChange;
     // Offline session
     __unsafe_unretained NSString *didReceiveUpdate;
     // System notifications

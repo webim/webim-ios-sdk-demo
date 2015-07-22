@@ -70,7 +70,10 @@ typedef void (^WMResponseCompletionBlock)(BOOL successful);
 
 - (void)setComposingMessage:(BOOL)isComposing completion:(WMResponseCompletionBlock)block;
 
+- (void)rateOperator:(NSString *)authorID withRate:(WMOperatorRate)rate completion:(WMResponseCompletionBlock)block;
+
 + (void)setDeviceToken:(NSData *)deviceToken;
++ (void)setDeviceTokenString:(NSString *)token;
 
 @end
 
@@ -87,5 +90,6 @@ typedef void (^WMResponseCompletionBlock)(BOOL successful);
 
 @optional
 - (void)session:(WMSession *)session didChangeConnectionStatus:(WMSessionConnectionStatus)status;
+- (void)session:(WMSession *)session didChangeHasOnlineOperatorStatus:(BOOL)hasOnlineOperator;
 
 @end

@@ -25,14 +25,15 @@ static NSString *Location = @"ios";
 static NSString *DeviceTokenUserDefaultsKey = @"WMSampleAppDeviceTokenKey";
 
 const struct WebimNotifications WebimNotifications = {
-    .onlineFullUpdate = @"WebimNofificationsOnlineFullUpdateNotification",
-    .onlineNewMessage = @"WebimNofificationsOnlineNewMessageNotification",
-    .onlineOperatorUpdate = @"WebimNofificationsOnlineOperatorUpdateNotification",
-    .onlineChatStart = @"WebimNofificationsOnlineChatStartNotification",
-    .onlineChatStatusChange = @"WebimNofificationsOnlineChatStatusChangeNotification",
-    .onlineSessionStatusChange = @"WebimNofificationsOnlineSessionStatusChangeNotification",
+    .onlineFullUpdate = @"WebimNotificationsOnlineFullUpdateNotification",
+    .onlineNewMessage = @"WebimNotificationsOnlineNewMessageNotification",
+    .onlineOperatorUpdate = @"WebimNotificationsOnlineOperatorUpdateNotification",
+    .onlineChatStart = @"WebimNotificationsOnlineChatStartNotification",
+    .onlineChatStatusChange = @"WebimNotificationsOnlineChatStatusChangeNotification",
+    .onlineSessionStatusChange = @"WebimNotificationsOnlineSessionStatusChangeNotification",
+    .onlineSessionHasOnlineOperatorChange = @"WebimNotificationsOnlineSessionHasOnlineOperatorChangeNotification",
     .didReceiveUpdate = @"WebimNotificationsDidReceiveUpdateNotification",
-    .didReceivePushToken = @"WebimNotificationsDidReceivePushTokenNotifications",
+    .didReceivePushToken = @"WebimNotificationsDidReceivePushTokenNotification",
 };
 
 @interface WebimController () <WMSessionDelegate>
@@ -60,6 +61,9 @@ const struct WebimNotifications WebimNotifications = {
     WebimController *sharedController = [WebimController shared];
     if (sharedController.deviceToken.length == 0) {
         sharedController.deviceToken = [WebimController deviceVendorIDToken];
+#if TARGET_IPHONE_SIMULATOR
+        [WMSession setDeviceTokenString:sharedController.deviceToken];
+#endif
     }
     
     // Initialize realtime session
@@ -165,6 +169,12 @@ const struct WebimNotifications WebimNotifications = {
     
     [CRToastManager showNotificationWithOptions:options completionBlock:^{
     }];
+}
+
+- (void)session:(WMSession *)session didChangeHasOnlineOperatorStatus:(BOOL)hasOnlineOperator {
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:WebimNotifications.onlineSessionHasOnlineOperatorChange
+                      object:@(hasOnlineOperator)];
 }
 
 - (void)session:(WMSession *)session didReceiveError:(WMSessionError)errorID {
