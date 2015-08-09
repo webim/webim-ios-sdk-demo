@@ -22,10 +22,8 @@
 
 @property (nonatomic, strong) NSDictionary *timestampMessageDictionary;
 
-@property (nonatomic, strong) NSString *operatorID;
-@property (nonatomic, strong) NSString *operatorName;
+@property (nonatomic, strong) NSDictionary *operators;
 @property (nonatomic, strong) JSQMessagesBubbleImage *operatorBubbleImage;
-@property (nonatomic, strong) JSQMessagesAvatarImage *operatorAvatarImage;
 
 @property (nonatomic, strong) NSString *systemID;
 @property (nonatomic, strong) NSString *systemName;

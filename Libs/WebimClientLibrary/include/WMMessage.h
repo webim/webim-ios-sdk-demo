@@ -21,6 +21,8 @@ typedef enum {
     WMMessageKindFileFromVisitor,
 } WMMessageKind;
 
+@class WMBaseSession;
+
 @interface WMMessage : NSObject
 
 @property (nonatomic, assign) WMMessageKind kind;
@@ -28,7 +30,15 @@ typedef enum {
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) id messageData;
 @property (nonatomic, strong) NSString *uid;
+
+@property (nonatomic, readonly) NSString *senderUID;
+@property (nonatomic, readonly) NSString *senderName;
+@property (nonatomic, readonly) NSURL *senderAvatarURL;
+
+@property (nonatomic, weak) WMBaseSession *session;
 @property (nonatomic, strong) NSString *authorID;
+@property (nonatomic, strong) NSString *avatar;
+@property (nonatomic, strong) NSString *name;
 
 - (NSString *)filePath;
 

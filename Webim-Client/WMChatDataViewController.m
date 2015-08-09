@@ -14,6 +14,9 @@
 
 static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
 
+static NSString *const OperatorName = @"OperatorName";
+static NSString *const OperatorImage = @"OperatorImage";
+
 @interface WMChatDataViewController () < WMChatDataSourceProtocol>
 
 @property (nonatomic, strong) JSQMessagesBubbleImageFactory *imageFactory;
@@ -33,32 +36,38 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
         chat = [self chatDataSourceCurrentChat];
     }
     
-    [self loadOperator:chat.chatOperator];
+    [self loadOperators];
     [self loadSender];
     [self loadSystem];
     [self loadMessages:chat];
 }
 
-- (void)loadOperator:(WMOperator *)operator {
-    self.operatorID = @"operator";
-    self.operatorName = @"Operator";
+- (void)loadOperators {
+    // Create bubble image
     self.operatorBubbleImage = [self.imageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     
-    if (operator != nil && operator.name.length > 0) {
-        self.operatorName = operator.name;
+    // For each operator load his image
+    NSMutableDictionary *operatorsDictionary = [NSMutableDictionary new];
+    for (WMMessage *message in [self chatDataSourceCurrentChat].messages) {
+        // Currently only operators has this field non empty
+        if (message.authorID.length > 0 && operatorsDictionary[message.senderUID] == nil) {
+            NSMutableDictionary *info = [NSMutableDictionary new];
+            NSAttributedString *name = [[NSAttributedString alloc] initWithString:[message senderName] ? : @"Operator"];
+            if (name.length > 0) {
+                info[OperatorName] = name;
+            }
+            UIImage *image = [message senderAvatarURL] ? [UIImage imageWithData:[NSData dataWithContentsOfURL:[message senderAvatarURL]]] : nil;
+            if (image == nil) {
+                image = [UIImage imageNamed:@"visitor_avatar_default"];
+            }
+            info[OperatorImage] = [JSQMessagesAvatarImageFactory avatarImageWithImage:image
+                                                                             diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+            
+            operatorsDictionary[message.authorID] = info;
+        }
     }
-    if (operator != nil && operator.avatarPath.length > 0) {
-        WMBaseSession *session = [self session];
-        NSString *avatarPath = [NSString stringWithFormat:@"%@%@", [session host], operator.avatarPath];
-        NSURL *avatarURL = [NSURL URLWithString:avatarPath];
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:avatarURL]];
-        self.operatorAvatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:image
-                                                                              diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    }
-    if (self.operatorAvatarImage == nil) {
-        self.operatorAvatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"visitor_avatar_default"]
-                                                                              diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    }
+    
+    self.operators = operatorsDictionary;
 }
 
 - (void)loadSender {
@@ -96,13 +105,15 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
         case WMMessageKindVisitor:
             return [[JSQMessage alloc] initWithSenderId:self.senderId senderDisplayName:self.senderDisplayName date:message.timestamp text:message.text];
         case WMMessageKindOperator:
-            return [[JSQMessage alloc] initWithSenderId:self.operatorID senderDisplayName:self.operatorName date:message.timestamp text:message.text];
+            NSAssert(message.senderUID.length > 0, @"Operator's unique id is missing");
+            return [[JSQMessage alloc] initWithSenderId:message.senderUID senderDisplayName:message.name date:message.timestamp text:message.text];
         case WMMessageKindFileFromVisitor:
             mediaItem = [self photoItemForWMMessage:message];
             return [[JSQMessage alloc] initWithSenderId:self.senderId senderDisplayName:self.senderDisplayName date:message.timestamp media:mediaItem];
         case WMMessageKindFileFromOperator:
+            NSAssert(message.senderUID.length > 0, @"Operator's unique id is missing");
             mediaItem = [self photoItemForWMMessage:message];
-            return [[JSQMessage alloc] initWithSenderId:self.operatorID senderDisplayName:self.operatorName date:message.timestamp media:mediaItem];
+            return [[JSQMessage alloc] initWithSenderId:message.senderUID senderDisplayName:message.senderName date:message.timestamp media:mediaItem];
         case WMMessageKindInfo:
             return [[JSQMessage alloc] initWithSenderId:self.systemID senderDisplayName:self.systemName date:message.timestamp text:message.text];
         default: return nil;
@@ -177,20 +188,19 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = [self.messagesDataSource objectAtIndex:indexPath.item];
-    if ([message.senderId isEqualToString:self.operatorID]) {
-        return [[NSAttributedString alloc] initWithString:self.operatorName];
-    } else if ([message.senderId isEqualToString:self.senderId]) {
-        return nil;
-    } else if ([message.senderId isEqualToString:self.systemID]) {
-        return nil;
+
+    NSDictionary *operatorInfo = self.operators[message.senderId];
+    if (operatorInfo != nil) {
+        return operatorInfo[OperatorName];
     }
+    
     return nil;
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     JSQMessage *message = [self.messagesDataSource objectAtIndex:indexPath.item];
-    if ([message.senderId isEqualToString:self.operatorID]) {
+    if (self.operators[message.senderId] != nil) {
         return self.operatorBubbleImage;
     } else if ([message.senderId isEqualToString:self.senderId]) {
         return self.senderBubbleImage;
@@ -204,8 +214,9 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = [self.messagesDataSource objectAtIndex:indexPath.item];
-    if ([message.senderId isEqualToString:self.operatorID]) {
-        return self.operatorAvatarImage;
+    NSDictionary *operatorInfo = self.operators[message.senderId];
+    if (operatorInfo != nil) {
+        return operatorInfo[OperatorImage];
     } else if ([message.senderId isEqualToString:self.senderId]) {
         return nil;
     } else if ([message.senderId isEqualToString:self.systemID]) {
@@ -228,13 +239,10 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = [self.messagesDataSource objectAtIndex:indexPath.item];
-    if ([message.senderId isEqualToString:self.operatorID]) {
+    if (self.operators[message.senderId] != nil) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
-    } else if ([message.senderId isEqualToString:self.senderId]) {
-        return 0.f;
-    } else if ([message.senderId isEqualToString:self.systemID]) {
-        return 0.f;
     }
+
     return 0.0f;
 }
 
@@ -251,7 +259,7 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
     cell = (id)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
     if (!msg.isMediaMessage) {
-        if ([msg.senderId isEqualToString:self.operatorID]) {
+        if (self.operators[msg.senderId] != nil) {
             cell.textView.textColor = [UIColor blackColor];
         } else if ([msg.senderId isEqualToString:self.senderId]) {
             cell.textView.textColor = [UIColor whiteColor];
@@ -274,7 +282,7 @@ static const NSTimeInterval DisplayDateEachTimeInterval = 60; // One minute
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = [self.messagesDataSource objectAtIndex:indexPath.item];
-    if ([message.senderId isEqualToString:self.operatorID]) {
+    if (self.operators[message.senderId] != nil) {
         [self openOperatorRatingView:message.senderId];
     }
 }

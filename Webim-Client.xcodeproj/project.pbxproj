@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03010AAA1844C69B002E2ACA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03010AAC1844C69B002E2ACA /* Localizable.strings */; };
+		031007D31B77BEC8007A374A /* libWebimClientLibrary-2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031007D21B77BEC8007A374A /* libWebimClientLibrary-2.2.a */; };
 		0366EBFE1977FE8C008561B8 /* WMChatBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0366EBFD1977FE8C008561B8 /* WMChatBaseViewController.m */; };
 		0366EC081979534D008561B8 /* WMOfflineChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0366EC071979534D008561B8 /* WMOfflineChatViewController.m */; };
 		0366EC0E197FD583008561B8 /* WMHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0366EC0D197FD583008561B8 /* WMHistoryCell.m */; };
@@ -21,7 +22,6 @@
 		038B04A7197279B200D00D0E /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 038B04A6197279B200D00D0E /* CRToast.m */; };
 		03B69F5E1B4FE17C00E04F9D /* LaunchImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03B69F5D1B4FE17C00E04F9D /* LaunchImages.xcassets */; };
 		03B69F601B4FE88B00E04F9D /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03B69F5F1B4FE88B00E04F9D /* AppIcon.xcassets */; };
-		03BEEAB61B5BD7DA00F3088E /* libWebimClientLibrary-2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BEEAB51B5BD7DA00F3088E /* libWebimClientLibrary-2.1.a */; };
 		03C6351B1815479900254398 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 03C635141815479900254398 /* iTunesArtwork */; };
 		03C6351C1815479900254398 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 03C635151815479900254398 /* iTunesArtwork@2x */; };
 		03C6535A17EF537100C64973 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C6535917EF537100C64973 /* QuartzCore.framework */; };
@@ -46,6 +46,7 @@
 /* Begin PBXFileReference section */
 		03010AAE1844C6A2002E2ACA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		03010AAF1844C6B6002E2ACA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		031007D21B77BEC8007A374A /* libWebimClientLibrary-2.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libWebimClientLibrary-2.2.a"; sourceTree = "<group>"; };
 		03511C16182BD4410005ED7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Storyboard-Phone.storyboard"; sourceTree = "<group>"; };
 		03511C17182BD4410005ED7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Storyboard-Pad.storyboard"; sourceTree = "<group>"; };
 		03511C18182BD4950005ED7C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		038B04A6197279B200D00D0E /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToast.m; sourceTree = "<group>"; };
 		03B69F5D1B4FE17C00E04F9D /* LaunchImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LaunchImages.xcassets; path = Resources/LaunchImages.xcassets; sourceTree = "<group>"; };
 		03B69F5F1B4FE88B00E04F9D /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = AppIcon.xcassets; path = Resources/AppIcon.xcassets; sourceTree = "<group>"; };
-		03BEEAB51B5BD7DA00F3088E /* libWebimClientLibrary-2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libWebimClientLibrary-2.1.a"; path = "Libs/WebimClientLibrary/libWebimClientLibrary-2.1.a"; sourceTree = SOURCE_ROOT; };
 		03C635141815479900254398 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = Resources/iTunesArtwork; sourceTree = "<group>"; };
 		03C635151815479900254398 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; name = "iTunesArtwork@2x"; path = "Resources/iTunesArtwork@2x"; sourceTree = "<group>"; };
 		03C6535917EF537100C64973 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -110,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				031007D31B77BEC8007A374A /* libWebimClientLibrary-2.2.a in Frameworks */,
 				03C6535A17EF537100C64973 /* QuartzCore.framework in Frameworks */,
 				03F4535D17B3CEA6000D217C /* Security.framework in Frameworks */,
 				03F4535C17B3CE93000D217C /* CoreLocation.framework in Frameworks */,
@@ -119,7 +120,6 @@
 				03F4531017B391EF000D217C /* Foundation.framework in Frameworks */,
 				03F4531217B391EF000D217C /* CoreGraphics.framework in Frameworks */,
 				3FC47A6BD3911D80B607193E /* libPods.a in Frameworks */,
-				03BEEAB61B5BD7DA00F3088E /* libWebimClientLibrary-2.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,7 +161,7 @@
 		03B14B4617E3321900A63EAC /* WebimClientLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				03BEEAB51B5BD7DA00F3088E /* libWebimClientLibrary-2.1.a */,
+				031007D21B77BEC8007A374A /* libWebimClientLibrary-2.2.a */,
 				038B04921971724500D00D0E /* include */,
 			);
 			name = WebimClientLibrary;
